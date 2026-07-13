@@ -36,14 +36,21 @@ public class ManagerScript : MonoBehaviour
             taskObject.transform.position = teleportMarks[i].position;
             taskScript.TaskNumberSet(i);
             taskScript.Initialize(this, i);
+            taskScript.CompleteTaskInit(this, i);
 
             taskScript._taskText.text = taskNames[i];
         }
     }
 
-    public void ModifyTask()
+    public void CompleteTask(int number)
     {
+        GameObject taskObject = taskList[number];
+        TaskScript taskScript = taskObject.GetComponent<TaskScript>();
 
+        taskScript._completedTask = !taskScript._completedTask;
+
+        if (taskScript._completedTask) taskScript._completeObject.SetActive(true);
+        else taskScript._completeObject.SetActive(false);
     }
 
     public void RemoveTask(int number)
