@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 public class ManagerScript : MonoBehaviour
 {
-    public TaskScript TS;
+    //public TaskScript TS;
 
-    public List<GameObject> taskList = new List<GameObject>();
-    public List<string> taskNames = new List<string>();
-    public string[] taskStrings;
-    public Transform[] teleportMarks;
+    [SerializeField] private List<GameObject> taskList = new List<GameObject>();
+    [SerializeField] private List<string> taskNames = new List<string>();
+    [SerializeField] private string[] taskStrings;
+    [SerializeField] private Transform[] teleportMarks;
 
     [SerializeField] private GameObject _task;
     [SerializeField] private Transform _taskContainer;
@@ -36,7 +36,6 @@ public class ManagerScript : MonoBehaviour
             taskObject.transform.position = teleportMarks[i].position;
             taskScript.TaskNumberSet(i);
             taskScript.Initialize(this, i);
-            taskScript.CompleteTaskInit(this, i);
 
             taskScript._taskText.text = taskNames[i];
         }
@@ -47,15 +46,13 @@ public class ManagerScript : MonoBehaviour
         GameObject taskObject = taskList[number];
         TaskScript taskScript = taskObject.GetComponent<TaskScript>();
 
-        taskScript._completedTask = !taskScript._completedTask;
-
-        if (taskScript._completedTask) taskScript._completeObject.SetActive(true);
-        else taskScript._completeObject.SetActive(false);
+        taskScript.CompleteObjectSwap();
     }
 
     public void RemoveTask(int number)
     {
-        Destroy(taskList[number].gameObject);
+        Destroy(taskList[number]);
+        taskList[number] = null;
     }
 
     private void TaskNameMaker()

@@ -494,7 +494,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6200923f7ada454c84f72f4a92b6e92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ManagerScript
-  TS: {fileID: 1411021436160702739, guid: e9a7a75e15fd6b747a97e6d8f4d54adb, type: 3}
   taskList: []
   taskNames: []
   taskStrings:

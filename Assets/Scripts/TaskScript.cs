@@ -6,15 +6,15 @@ public class TaskScript : MonoBehaviour
 {
     [Header("Objects and texts")]
     public TMP_Text _taskText;
-    public GameObject _completeObject;
+    [SerializeField] private GameObject _completeObject;
 
     [Header("Buttons")]
-    public Button _removeButton;
-    public Button _completeButton;
+    [SerializeField] private Button _removeButton;
+    [SerializeField] private Button _completeButton;
 
     [Header("Data")]
-    public int _taskNumber;
-    public bool _completedTask = false;
+    [SerializeField] private int _taskNumber;
+    [SerializeField] private bool _completedTask = false;
 
     private ManagerScript manager;
 
@@ -35,14 +35,14 @@ public class TaskScript : MonoBehaviour
 
         _removeButton.onClick.RemoveAllListeners();
         _removeButton.onClick.AddListener(() => manager.RemoveTask(_taskNumber));
-    }
-
-    public void CompleteTaskInit(ManagerScript manager, int number)
-    {
-        this.manager = manager;
-
-        _completeButton.onClick.RemoveAllListeners();
         _completeButton.onClick.AddListener(() => manager.CompleteTask(_taskNumber));
     }
 
+    public void CompleteObjectSwap()
+    {
+        _completedTask = !_completedTask;
+
+        if (_completedTask) _completeObject.SetActive(true);
+        else _completeObject.SetActive(false);
+    }
 }
