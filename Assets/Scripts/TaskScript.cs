@@ -11,6 +11,7 @@ public class TaskScript : MonoBehaviour
     [Header("Buttons")]
     [SerializeField] private Button _removeButton;
     [SerializeField] private Button _completeButton;
+    [SerializeField] private Button _renameButton;
 
     [Header("Data")]
     [SerializeField] private int _taskNumber;
@@ -36,6 +37,7 @@ public class TaskScript : MonoBehaviour
         _removeButton.onClick.RemoveAllListeners();
         _removeButton.onClick.AddListener(() => manager.RemoveTask(_taskNumber));
         _completeButton.onClick.AddListener(() => manager.CompleteTask(_taskNumber));
+        _renameButton.onClick.AddListener(() => manager.RenameTask(_taskNumber));
     }
 
     public void CompleteObjectSwap()
