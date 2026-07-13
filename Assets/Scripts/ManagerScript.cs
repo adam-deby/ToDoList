@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
+using System.IO;
 
 public class ManagerScript : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class ManagerScript : MonoBehaviour
 
     private int _maxTaskAmount = 5;
     private int indexNumber;
+    private bool hasLoaded;
 
     private void Start()
     {
@@ -27,19 +29,25 @@ public class ManagerScript : MonoBehaviour
     }
 
     public void AddTask()
-    {;
-        for (int i=0;i<_maxTaskAmount;i++)
+    {
+        for (int i = 0; i < taskNames.Count; i++)
         {
-            if (taskList[i] != null) continue;
+            if (hasLoaded && taskList[i] != null) continue;
 
             GameObject taskObject = Instantiate(_task.gameObject, _taskContainer);
+
+            if (!hasLoaded) taskList.Add(taskObject);
+            else taskList[i] = taskObject;
+            
             TaskScript taskScript = taskObject.GetComponent<TaskScript>();
-            taskList[i] = taskObject;
+
             taskObject.transform.position = teleportMarks[i].position;
             taskScript.Initialize(this, i);
 
             taskScript._taskText.text = taskNames[i];
         }
+
+        if (!hasLoaded) hasLoaded = true;
     }
 
     public void CompleteTask(int number)
@@ -69,25 +77,59 @@ public class ManagerScript : MonoBehaviour
         taskScript._taskText.text = text;
         taskNames[indexNumber] = text;
         inputField.text = "";
+        TaskNamesSave();
         inputObject.SetActive(false);
     }
 
     private void TaskNameMaker()
     {
-        for (int i = 0; i < _maxTaskAmount; i++)
+        string path = Path.Combine(Application.persistentDataPath, "save.json");
+
+        if (File.Exists(path))
         {
-            taskList.Add(null);
+            string json = File.ReadAllText(path);
 
-            string text;
+            SaveData saveData = JsonUtility.FromJson<SaveData>(json);
 
-            do
-            {
-                int roll = Random.Range(0, taskStrings.Length);
-                text = taskStrings[roll];
-            }
-            while (taskNames.Contains(text));
-          
-            taskNames.Add(text);
+            taskNames = saveData.taskNames;
         }
+        else
+        {
+            for (int i=0;i<_maxTaskAmount;i++)
+            {
+                taskNames.Add(null);
+            }
+
+            for (int i = 0; i < _maxTaskAmount; i++)
+            {
+                string text;
+
+                do
+                {
+                    int roll = Random.Range(0, taskStrings.Length);
+                    text = taskStrings[roll];
+                }
+                while (taskNames.Contains(text));
+
+                taskNames[i] = text;
+            }
+
+            TaskNamesSave();
+        }
+
+    }
+
+    public void TaskNamesSave()
+    {
+        SaveData saveDataa = new SaveData();
+        saveDataa.taskNames = taskNames;
+
+        string jsonn = JsonUtility.ToJson(saveDataa, true);
+
+        string pathh = Path.Combine(Application.persistentDataPath, "save.json");
+
+        File.WriteAllText(pathh, jsonn);
+
+        Debug.Log(pathh);
     }
 }

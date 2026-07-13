@@ -1,7 +1,9 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.IO;
 
+[System.Serializable]
 public class TaskScript : MonoBehaviour
 {
     [Header("Objects and texts")]
