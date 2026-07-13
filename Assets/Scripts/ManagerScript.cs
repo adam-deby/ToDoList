@@ -36,6 +36,8 @@ public class ManagerScript : MonoBehaviour
             taskObject.transform.position = teleportMarks[i].position;
             taskScript.TaskNumberSet(i);
             taskScript.Initialize(this, i);
+
+            taskScript._taskText.text = taskNames[i];
         }
     }
 
@@ -61,7 +63,7 @@ public class ManagerScript : MonoBehaviour
                 text = taskStrings[roll];
             }
             while (taskNames.Contains(text));
-
+          
             taskNames.Add(text);
         }
     }
