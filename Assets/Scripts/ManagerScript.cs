@@ -36,7 +36,6 @@ public class ManagerScript : MonoBehaviour
             TaskScript taskScript = taskObject.GetComponent<TaskScript>();
             taskList[i] = taskObject;
             taskObject.transform.position = teleportMarks[i].position;
-            taskScript.TaskNumberSet(i);
             taskScript.Initialize(this, i);
 
             taskScript._taskText.text = taskNames[i];
@@ -48,7 +47,7 @@ public class ManagerScript : MonoBehaviour
         GameObject taskObject = taskList[number];
         TaskScript taskScript = taskObject.GetComponent<TaskScript>();
 
-        taskScript.CompleteObjectSwap();
+        taskScript.ToggleCompleted();
     }
 
     public void RemoveTask(int number)
@@ -68,6 +67,7 @@ public class ManagerScript : MonoBehaviour
         GameObject taskObject = taskList[indexNumber];
         TaskScript taskScript = taskObject.GetComponent<TaskScript>();
         taskScript._taskText.text = text;
+        taskNames[indexNumber] = text;
         inputField.text = "";
         inputObject.SetActive(false);
     }

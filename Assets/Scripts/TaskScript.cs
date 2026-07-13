@@ -24,23 +24,20 @@ public class TaskScript : MonoBehaviour
         _completeObject.SetActive(false);
     }
 
-    public void TaskNumberSet(int number)
-    {
-        _taskNumber = number;
-    }
-
     public void Initialize(ManagerScript manager, int number)
     {
         this.manager = manager;
         _taskNumber = number;
 
         _removeButton.onClick.RemoveAllListeners();
+        _completeButton.onClick.RemoveAllListeners();
+        _renameButton.onClick.RemoveAllListeners();
         _removeButton.onClick.AddListener(() => manager.RemoveTask(_taskNumber));
         _completeButton.onClick.AddListener(() => manager.CompleteTask(_taskNumber));
         _renameButton.onClick.AddListener(() => manager.RenameTask(_taskNumber));
     }
 
-    public void CompleteObjectSwap()
+    public void ToggleCompleted()
     {
         _completedTask = !_completedTask;
 
