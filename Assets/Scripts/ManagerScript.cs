@@ -26,20 +26,16 @@ public class ManagerScript : MonoBehaviour
 
     public void AddTask()
     {;
-        int nr = 0;
-
         for (int i=0;i<_maxTaskAmount;i++)
         {
             if (taskList[i] != null) continue;
 
             GameObject taskObject = Instantiate(_task.gameObject, _taskContainer);
             TaskScript taskScript = taskObject.GetComponent<TaskScript>();
-            //taskList.Add(taskObject);
             taskList[i] = taskObject;
             taskObject.transform.position = teleportMarks[i].position;
-            taskScript.TaskNumberSet(nr);
-            taskScript.Initialize(this, nr);
-            nr++;
+            taskScript.TaskNumberSet(i);
+            taskScript.Initialize(this, i);
         }
     }
 
@@ -50,17 +46,6 @@ public class ManagerScript : MonoBehaviour
 
     public void RemoveTask(int number)
     {
-        /*for (int i=0;i<_maxTaskAmount;i++)
-       {
-           GameObject task = taskList[i];
-           TaskScript taskScript = GetComponent<TaskScript>();
-           if (i == taskScript._taskNumber)
-           {
-               taskList.RemoveAt(i);
-               Destroy(task.gameObject);
-           }                    
-       }
-       */
         Destroy(taskList[number].gameObject);
     }
 
