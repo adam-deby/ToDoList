@@ -121,15 +121,15 @@ public class ManagerScript : MonoBehaviour
 
     public void TaskNamesSave()
     {
-        SaveData saveDataa = new SaveData();
-        saveDataa.taskNames = taskNames;
+        SaveData saveData = new SaveData();
+        saveData.taskNames = taskNames;
 
-        string jsonn = JsonUtility.ToJson(saveDataa, true);
+        string json = JsonUtility.ToJson(saveData, true);
 
-        string pathh = Path.Combine(Application.persistentDataPath, "save.json");
+        string path = Path.Combine(Application.persistentDataPath, "save.json");
 
-        File.WriteAllText(pathh, jsonn);
+        File.WriteAllText(path, json);
 
-        Debug.Log(pathh);
+        Debug.Log(path);
     }
 }
